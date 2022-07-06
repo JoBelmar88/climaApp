@@ -14,16 +14,23 @@ const main = async() => {
                 const lugares = await busquedas.ciudad(lugar);
                 const id = await listarLugares(lugares);
                 const lugarSelecionado = lugares.find( lugar => lugar.id === id );
-                const tiempoLugar = await busquedas.tiempo(lugarSelecionado);
-                //console.log(lugarSelecionado);
-
+                const { temperatura, maxima, minima, probabilidades } = await busquedas.tiempo(lugarSelecionado);
                 console.log(`\nInformación de la ciudad\n`.green);
                 console.log(`Ciudad ${lugarSelecionado.nombre}`);
                 console.log(`Latitud: ${lugarSelecionado.lat}`);
                 console.log(`Longitud: ${lugarSelecionado.lng}`);
-                console.log(`Temperatura: `);
-                console.log(`Mínima: `);
-                console.log(`Máxima: `);
+                console.log(`Temperatura: ${temperatura} C°`);
+                console.log(`Mínima: ${minima} C°`);
+                console.log(`Máxima: ${maxima} C°`);
+                
+                probabilidades.forEach(probabilidad => {
+                    console.log(`
+                    ¿Cómo está el tiempo?\n
+                    ==============================\n
+                    ${probabilidad.main}\n
+                    ------------------------------\n
+                    ${probabilidad.description}`.blue);                    
+                });
                 
             break;    
 
